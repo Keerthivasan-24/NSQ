@@ -1,0 +1,5 @@
+<div class="skeleton-wrapper" [style.gap]="gap">
+  <div *ngFor="let row of rowArray" class="skeleton-row" [style.height]="height">
+    <div *ngFor="let col of colArray" class="skeleton-box"></div>
+  </div>
+</div>

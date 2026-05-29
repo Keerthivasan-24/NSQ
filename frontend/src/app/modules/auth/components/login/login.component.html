@@ -1,0 +1,86 @@
+<div class="login-container">
+  <div class="login-card-wrapper animate-slide-up">
+    <!-- Brand / Banner Section -->
+    <div class="brand-section">
+      <div class="logo-wrapper">
+        <mat-icon class="brand-icon">verified_user</mat-icon>
+        <span class="brand-name">MPloyChek</span>
+      </div>
+      <h1 class="brand-tagline">Background Verification Made Seamless</h1>
+      <p class="brand-desc">Enterprise-grade secure credential analysis and background verification management portal.</p>
+    </div>
+
+    <!-- Form Section -->
+    <div class="form-section">
+      <h2 class="form-title">Account Login</h2>
+      <p class="form-subtitle">Enter credentials and select user role</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <!-- User ID -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>User ID</mat-label>
+          <input matInput formControlName="userId" placeholder="Enter your User ID" autocomplete="username">
+          <mat-icon matSuffix color="primary">person</mat-icon>
+          <mat-error *ngIf="loginForm.get('userId')?.hasError('required')">
+            User ID is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Password -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Enter your password" autocomplete="current-password">
+          <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            Password is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Role Select -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select Role</mat-label>
+          <mat-select formControlName="role">
+            <mat-option value="Admin">
+              <span class="role-option-item">
+                <mat-icon class="role-icon">admin_panel_settings</mat-icon>
+                System Administrator
+              </span>
+            </mat-option>
+            <mat-option value="General User">
+              <span class="role-option-item">
+                <mat-icon class="role-icon">account_circle</mat-icon>
+                General Verification User
+              </span>
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix color="primary" style="margin-right: 12px; pointer-events: none;">security</mat-icon>
+          <mat-error *ngIf="loginForm.get('role')?.hasError('required')">
+            Role selection is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Submit Button -->
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="login-btn full-width">
+          Sign In
+        </button>
+      </form>
+
+      <!-- Demo Credentials Information -->
+      <div class="credentials-info">
+        <h4 class="credentials-title">Demo Credentials:</h4>
+        <div class="credentials-grids">
+          <div class="credential-box">
+            <span class="cred-role">Admin:</span>
+            <span class="cred-value">admin / admin123</span>
+          </div>
+          <div class="credential-box">
+            <span class="cred-role">General:</span>
+            <span class="cred-value">user1 / user123</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Modify User Profile' : 'Register New User' }}</h2>
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-dialog-form">
+  <mat-dialog-content class="dialog-content">
+    
+    <!-- User ID -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>User ID</mat-label>
+      <input matInput formControlName="userId" placeholder="e.g. user3">
+      <mat-icon matSuffix color="primary">account_box</mat-icon>
+      <mat-error *ngIf="userForm.get('userId')?.hasError('required')">User ID is required</mat-error>
+      <mat-error *ngIf="userForm.get('userId')?.hasError('minlength')">User ID must be at least 3 characters</mat-error>
+    </mat-form-field>
+
+    <!-- Name -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Full Name</mat-label>
+      <input matInput formControlName="name" placeholder="e.g. Robert Martin">
+      <mat-icon matSuffix color="primary">person</mat-icon>
+      <mat-error *ngIf="userForm.get('name')?.hasError('required')">Name is required</mat-error>
+    </mat-form-field>
+
+    <!-- Role select -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Select Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="General User">General User</mat-option>
+        <mat-option value="Admin">Admin</mat-option>
+      </mat-select>
+      <mat-icon matSuffix color="primary" style="margin-right: 12px; pointer-events: none;">security</mat-icon>
+    </mat-form-field>
+
+    <!-- Status select -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Account Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="Active">Active</mat-option>
+        <mat-option value="Deactivated">Deactivated</mat-option>
+      </mat-select>
+      <mat-icon matSuffix color="primary" style="margin-right: 12px; pointer-events: none;">verified</mat-icon>
+    </mat-form-field>
+
+    <!-- Password -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password {{ isEditMode ? '(leave blank to keep unchanged)' : '' }}</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Enter password">
+      <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="userForm.get('password')?.hasError('required')">Password is required</mat-error>
+      <mat-error *ngIf="userForm.get('password')?.hasError('minlength')">Password must be at least 5 characters</mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button type="button" mat-button (click)="onCancel()">Cancel</button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="userForm.invalid">
+      {{ isEditMode ? 'Save Changes' : 'Register' }}
+    </button>
+  </mat-dialog-actions>
+</form>

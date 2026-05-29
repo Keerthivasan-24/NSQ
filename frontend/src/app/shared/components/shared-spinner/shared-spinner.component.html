@@ -1,0 +1,7 @@
+<div class="spinner-overlay" *ngIf="apiService.loading$ | async">
+  <div class="spinner-card">
+    <mat-spinner color="primary" diameter="50"></mat-spinner>
+    <p class="loading-message">{{ apiService.loadingMessage$ | async }}</p>
+    <mat-progress-bar mode="indeterminate" color="accent" class="progress-bar"></mat-progress-bar>
+  </div>
+</div>

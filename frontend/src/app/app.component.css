@@ -1,0 +1,279 @@
+.app-layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--header-bg) !important;
+  color: var(--header-text) !important;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 24px;
+  z-index: 1000;
+  height: 64px;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 32px;
+}
+
+.logo-icon {
+  font-size: 24px;
+  height: 24px;
+  width: 24px;
+  color: var(--primary-color);
+}
+
+.logo-text {
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  color: var(--text-color);
+}
+
+.nav-links {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.nav-links a:hover {
+  background-color: var(--hover-bg);
+  color: var(--text-color);
+}
+
+.active-nav {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  color: var(--primary-color) !important;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.controls-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.latency-selector-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-icon {
+  color: var(--text-secondary);
+}
+
+.latency-select {
+  width: 130px;
+}
+
+/* Hide Material form field underline and padding in toolbar */
+.latency-select ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+.latency-select ::ng-deep .mat-mdc-text-field-wrapper {
+  padding: 0 8px !important;
+  height: 38px !important;
+  border-radius: 8px !important;
+  background-color: var(--hover-bg) !important;
+}
+
+.latency-select ::ng-deep .mat-mdc-form-field-flex {
+  height: 38px !important;
+  align-items: center !important;
+}
+
+.latency-select ::ng-deep .mat-mdc-select-trigger {
+  font-size: 13px !important;
+  font-weight: 600;
+}
+
+.control-btn {
+  color: var(--text-secondary);
+}
+
+.user-profile-badge {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2;
+  border-left: 1px solid var(--border-color);
+  padding-left: 16px;
+}
+
+.user-name-text {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-color);
+}
+
+.user-role-lbl {
+  font-size: 10px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.logout-btn {
+  background-color: var(--warn-color) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  height: 38px !important;
+  padding: 0 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  transition: transform 0.2s, background-color 0.2s !important;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626 !important;
+  transform: translateY(-1px);
+}
+
+.logout-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+}
+
+.router-viewport-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  background-color: var(--bg-color);
+}
+
+/* Timeout Inactivity Warning Modal Styles */
+.timeout-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.timeout-card {
+  background-color: var(--card-bg);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  max-width: 460px;
+  width: 90%;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeout-card-icon {
+  font-size: 56px;
+  height: 56px;
+  width: 56px;
+  color: var(--warn-color);
+  margin-bottom: 16px;
+}
+
+.timeout-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-color);
+  margin-bottom: 12px;
+}
+
+.timeout-description {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.countdown-circle {
+  height: 110px;
+  width: 110px;
+  border-radius: 50%;
+  border: 4px solid var(--warn-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 32px;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.03); }
+}
+
+.countdown-number {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text-color);
+  line-height: 1;
+}
+
+.countdown-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.timeout-actions {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.timeout-actions button {
+  flex: 1;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.keep-alive-btn {
+  background-color: var(--primary-color) !important;
+  color: #ffffff !important;
+}
+
+.close-session-btn {
+  border: 1px solid var(--border-color);
+}
+
+/* Sidenav overrides for dark theme */
+body.dark-theme .header-bar {
+  background-color: var(--header-bg) !important;
+  border-color: var(--border-color);
+}

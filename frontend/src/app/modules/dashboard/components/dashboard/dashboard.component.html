@@ -1,0 +1,198 @@
+<div class="dashboard-wrapper">
+  <!-- Sidenav or main content container -->
+  <div class="main-content container-fluid">
+    
+    <!-- Profile Card & Quick Stats Grid -->
+    <div class="top-row-grid">
+      <!-- Profile Card -->
+      <mat-card class="profile-card animate-fade">
+        <mat-card-header>
+          <div mat-card-avatar class="profile-avatar">
+            <mat-icon>account_circle</mat-icon>
+          </div>
+          <mat-card-title>{{ currentUser?.name }}</mat-card-title>
+          <mat-card-subtitle>{{ currentUser?.role }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="profile-details">
+          <div class="detail-row">
+            <span class="detail-label">User ID:</span>
+            <span class="detail-value">{{ currentUser?.userId }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Account Status:</span>
+            <span class="status-badge" [class.badge-active]="currentUser?.status === 'Active'">
+              {{ currentUser?.status }}
+            </span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Last Login:</span>
+            <span class="detail-value last-login-time">{{ (currentUser?.lastLogin | date:'medium') || 'First login session' }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Analytics Cards -->
+      <div class="analytics-grid">
+        <!-- Total Users / Cases -->
+        <mat-card class="stat-card stat-total animate-fade">
+          <div class="stat-icon-wrapper"><mat-icon>folder</mat-icon></div>
+          <div class="stat-content">
+            <span class="stat-label">{{ currentUser?.role === 'Admin' ? 'Total Database Records' : 'My Total Checks' }}</span>
+            <h2 class="stat-number">{{ stats.total }}</h2>
+          </div>
+        </mat-card>
+
+        <!-- Active checks -->
+        <mat-card class="stat-card stat-active animate-fade">
+          <div class="stat-icon-wrapper"><mat-icon>sync</mat-icon></div>
+          <div class="stat-content">
+            <span class="stat-label">In Progress Checks</span>
+            <h2 class="stat-number">{{ stats.active }}</h2>
+          </div>
+        </mat-card>
+
+        <!-- Pending Checks -->
+        <mat-card class="stat-card stat-pending animate-fade">
+          <div class="stat-icon-wrapper"><mat-icon>hourglass_empty</mat-icon></div>
+          <div class="stat-content">
+            <span class="stat-label">Pending Requests</span>
+            <h2 class="stat-number">{{ stats.pending }}</h2>
+          </div>
+        </mat-card>
+
+        <!-- Completed Checks -->
+        <mat-card class="stat-card stat-completed animate-fade">
+          <div class="stat-icon-wrapper"><mat-icon>check_circle</mat-icon></div>
+          <div class="stat-content">
+            <span class="stat-label">Completed Checks</span>
+            <h2 class="stat-number">{{ stats.completed }}</h2>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Filter Actions Bar -->
+    <mat-card class="filter-card animate-fade">
+      <mat-card-content class="filter-flex-container">
+        <!-- Search bar -->
+        <mat-form-field appearance="outline" class="filter-input search-field">
+          <mat-label>Search records</mat-label>
+          <input matInput [(ngModel)]="searchQuery" (keyup)="applyFilter()" placeholder="Search ID, Type, Status...">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <!-- Verification Type Filter -->
+        <mat-form-field appearance="outline" class="filter-input">
+          <mat-label>Verification Type</mat-label>
+          <mat-select [(ngModel)]="filterType" (selectionChange)="applyFilter()">
+            <mat-option value="">All Types</mat-option>
+            <mat-option value="Employment">Employment Verification</mat-option>
+            <mat-option value="Criminal">Criminal Background Check</mat-option>
+            <mat-option value="Education">Education Verification</mat-option>
+            <mat-option value="Identity">Identity Verification</mat-option>
+            <mat-option value="Credit">Credit History Check</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Status Filter -->
+        <mat-form-field appearance="outline" class="filter-input">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="filterStatus" (selectionChange)="applyFilter()">
+            <mat-option value="">All Statuses</mat-option>
+            <mat-option value="Completed">Completed</mat-option>
+            <mat-option value="Pending">Pending</mat-option>
+            <mat-option value="In Progress">In Progress</mat-option>
+            <mat-option value="Failed">Failed</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Clear Button -->
+        <button mat-stroked-button color="warn" class="clear-btn" (click)="clearFilters()">
+          <mat-icon>clear_all</mat-icon> Clear Filters
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Records Table Card -->
+    <mat-card class="table-card animate-fade">
+      <mat-card-header class="table-card-header">
+        <mat-card-title>Verification Cases Table</mat-card-title>
+        <button mat-icon-button (click)="loadRecords()" matTooltip="Refresh data">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </mat-card-header>
+      <mat-card-content class="table-card-content">
+        <!-- Loading Skeleton Overlay inside Card Content -->
+        <div class="skeleton-container" *ngIf="isLoading">
+          <app-skeleton-loader [rows]="4" [cols]="currentUser?.role === 'Admin' ? 7 : 6" height="36px"></app-skeleton-loader>
+        </div>
+
+        <div class="table-responsive-wrapper" [class.hidden]="isLoading">
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0 w-100">
+            <!-- Record ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Record ID </th>
+              <td mat-cell *matCellDef="let row"> <strong>{{row.id}}</strong> </td>
+            </ng-container>
+
+            <!-- User ID Column (Admin Only) -->
+            <ng-container matColumnDef="userId">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> User ID </th>
+              <td mat-cell *matCellDef="let row"> {{row.userId}} </td>
+            </ng-container>
+
+            <!-- Verification Type Column -->
+            <ng-container matColumnDef="verificationType">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Verification Type </th>
+              <td mat-cell *matCellDef="let row"> {{row.verificationType}} </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+              <td mat-cell *matCellDef="let row">
+                <span class="table-status-badge" [ngClass]="getStatusClass(row.status)">
+                  {{row.status}}
+                </span>
+              </td>
+            </ng-container>
+
+            <!-- Submitted Date Column -->
+            <ng-container matColumnDef="submittedDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Submitted Date </th>
+              <td mat-cell *matCellDef="let row"> {{row.submittedDate | date}} </td>
+            </ng-container>
+
+            <!-- Access Level Column -->
+            <ng-container matColumnDef="accessLevel">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Access Level </th>
+              <td mat-cell *matCellDef="let row">
+                <span class="level-badge">{{row.accessLevel}}</span>
+              </td>
+            </ng-container>
+
+            <!-- Processing Time Column -->
+            <ng-container matColumnDef="processingTime">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Est. Processing </th>
+              <td mat-cell *matCellDef="let row"> {{row.processingTime}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell empty-table-cell" [attr.colspan]="displayedColumns.length">
+                <mat-icon class="empty-icon">search_off</mat-icon>
+                <p>No verification records match the filter criteria.</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons aria-label="Select page of records"></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

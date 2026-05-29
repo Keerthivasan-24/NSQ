@@ -1,0 +1,19 @@
+.user-dialog-form {
+  min-width: 320px;
+  max-width: 450px;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 4px !important;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.dialog-actions {
+  padding: 16px 4px 0 4px !important;
+}

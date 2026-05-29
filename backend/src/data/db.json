@@ -1,0 +1,101 @@
+{
+  "users": [
+    {
+      "id": "admin",
+      "userId": "admin",
+      "name": "System Admin",
+      "role": "Admin",
+      "password": "admin123",
+      "status": "Active",
+      "lastLogin": "2026-05-29T17:02:07.368Z"
+    },
+    {
+      "id": "user1",
+      "userId": "user1",
+      "name": "John Doe",
+      "role": "General User",
+      "password": "user123",
+      "status": "Active",
+      "lastLogin": "2026-05-29T17:09:02.147Z"
+    },
+    {
+      "id": "user2",
+      "userId": "user2",
+      "name": "Jane Smith",
+      "role": "General User",
+      "password": "user123",
+      "status": "Active",
+      "lastLogin": ""
+    }
+  ],
+  "records": [
+    {
+      "id": "REC-001",
+      "userId": "user1",
+      "verificationType": "Employment Verification",
+      "status": "Completed",
+      "submittedDate": "2026-05-10",
+      "accessLevel": "L1",
+      "processingTime": "2 days"
+    },
+    {
+      "id": "REC-002",
+      "userId": "user1",
+      "verificationType": "Criminal Background Check",
+      "status": "Completed",
+      "submittedDate": "2026-05-12",
+      "accessLevel": "L3",
+      "processingTime": "4 days"
+    },
+    {
+      "id": "REC-003",
+      "userId": "user1",
+      "verificationType": "Education Verification",
+      "status": "Pending",
+      "submittedDate": "2026-05-25",
+      "accessLevel": "L2",
+      "processingTime": "In Progress"
+    },
+    {
+      "id": "REC-004",
+      "userId": "user2",
+      "verificationType": "Identity Verification",
+      "status": "Completed",
+      "submittedDate": "2026-05-15",
+      "accessLevel": "L1",
+      "processingTime": "1 day"
+    },
+    {
+      "id": "REC-005",
+      "userId": "user2",
+      "verificationType": "Credit History Check",
+      "status": "In Progress",
+      "submittedDate": "2026-05-27",
+      "accessLevel": "L2",
+      "processingTime": "In Progress"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "LOG-1780074542148-114",
+      "timestamp": "2026-05-29T17:09:02.148Z",
+      "userId": "user1",
+      "action": "USER_LOGIN",
+      "details": "User successfully logged in with role: General User"
+    },
+    {
+      "id": "LOG-1780074127371-275",
+      "timestamp": "2026-05-29T17:02:07.371Z",
+      "userId": "admin",
+      "action": "USER_LOGIN",
+      "details": "User successfully logged in with role: Admin"
+    },
+    {
+      "id": "LOG-001",
+      "timestamp": "2026-05-29T10:00:00Z",
+      "userId": "admin",
+      "action": "SYSTEM_STARTUP",
+      "details": "Database initialized and mock data populated successfully."
+    }
+  ]
+}

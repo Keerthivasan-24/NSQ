@@ -1,0 +1,150 @@
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+:root {
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-rgb: 59, 130, 246;
+  --accent-color: #10b981;
+  --accent-hover: #059669;
+  --warn-color: #ef4444;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-color: #0f172a;
+  --text-secondary: #475569;
+  --border-color: #e2e8f0;
+  --sidebar-bg: #1e293b;
+  --sidebar-text: #f8fafc;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --header-bg: #ffffff;
+  --header-text: #0f172a;
+  --hover-bg: #f1f5f9;
+}
+
+body.dark-theme {
+  --primary-color: #60a5fa;
+  --primary-hover: #3b82f6;
+  --primary-rgb: 96, 165, 250;
+  --accent-color: #34d399;
+  --accent-hover: #10b981;
+  --warn-color: #f87171;
+  --bg-color: #0b0f19;
+  --card-bg: #151f32;
+  --text-color: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border-color: #1e293b;
+  --sidebar-bg: #090d16;
+  --sidebar-text: #f8fafc;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --header-bg: #151f32;
+  --header-text: #f8fafc;
+  --hover-bg: #1e293b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Material overrides for dark theme */
+body.dark-theme .mat-mdc-card {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+body.dark-theme .mat-mdc-table {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+body.dark-theme .mat-mdc-paginator {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+body.dark-theme .mat-mdc-tab {
+  color: var(--text-secondary) !important;
+}
+
+body.dark-theme .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: var(--primary-color) !important;
+}
+
+body.dark-theme .mat-mdc-select-value {
+  color: var(--text-color) !important;
+}
+
+body.dark-theme .mat-mdc-form-field-focus-overlay {
+  background-color: transparent !important;
+}
+
+body.dark-theme .mat-mdc-text-field-wrapper {
+  background-color: var(--hover-bg) !important;
+}
+
+body.dark-theme .mat-mdc-form-field-label {
+  color: var(--text-secondary) !important;
+}
+
+body.dark-theme .mat-mdc-input-element {
+  color: var(--text-color) !important;
+}
+
+/* Common form style adjustments in dark theme */
+body.dark-theme .mat-mdc-dialog-container .mdc-dialog__content {
+  color: var(--text-secondary) !important;
+}
+
+body.dark-theme .mat-mdc-dialog-container {
+  --mdc-dialog-container-color: var(--card-bg) !important;
+}
+
+body.dark-theme .mat-mdc-dialog-title {
+  color: var(--text-color) !important;
+}
+
+/* Utility Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fade {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Skeleton Loading styles */
+.skeleton-box {
+  display: inline-block;
+  height: 20px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--hover-bg) 25%, var(--border-color) 50%, var(--hover-bg) 75%);
+  background-size: 200% 100%;
+  animation: loading-skeleton 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes loading-skeleton {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
